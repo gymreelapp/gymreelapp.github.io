@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gym Reel — Track Real. Share Real.</title>
+  <meta name="description" content="Gym Reel is the iOS fitness app that combines serious workout tracking with a social feed built for athletes. Log lifts, track runs, and share your stats." />
+  <meta property="og:title" content="Gym Reel — Track Real. Share Real." />
+  <meta property="og:description" content="The iOS fitness app that combines serious workout tracking with a social feed built for athletes." />
+  <meta property="og:image" content="icon.png" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:        #05111f;   /* deep navy-black */
+      --dark:         #081828;   /* slightly lighter navy dark */
+      --card:         #0c2035;   /* navy card surface */
+      --card-hi:      #0f2840;   /* hover surface */
+      --border:       #1a3557;   /* navy border */
+      --border-hi:    #234470;   /* highlighted border */
+      --muted:        #4d7aab;   /* muted blue-grey text */
+      --text:         #c5dff5;   /* soft light-blue text */
+      --white:        #ffffff;
+      --accent:       #5BB8F5;   /* mid blue — primary interactive */
+      --accent-light: #D5F0FF;   /* very light blue — highlights */
+      --navy:         #1A3A6B;   /* deep navy — solid fills */
+      --accent2:      #3a9ee8;   /* slightly deeper blue for secondary */
+      --radius:       16px;
+      --r-sm:         10px;
+      --transition:   0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 64px;
+      background: rgba(5,17,31,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent-light); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--black) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700 !important;
+      transition: opacity var(--transition) !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── HERO ─────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 650px;
+      background: radial-gradient(ellipse at center, rgba(91,184,245,0.14) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      bottom: 5%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(26,58,107,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(91,184,245,0.1);
+      border: 1px solid rgba(91,184,245,0.3);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+    }
+    .hero-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      object-fit: cover;
+      box-shadow: 0 20px 60px rgba(91,184,245,0.25), 0 0 0 1px rgba(91,184,245,0.15);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .hero h1 .reel { color: var(--white); }
+    .hero h1 .real { color: var(--accent); }
+    .hero-arrow { font-style: normal; color: var(--muted); font-size: 0.6em; vertical-align: middle; margin: 0 0.15em; }
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 1.4rem auto 2.6rem;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: var(--r-sm);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--black);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(91,184,245,0.35); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent-light); background: rgba(91,184,245,0.05); }
+
+    .app-store-icon { width: 20px; height: 20px; }
+
+    /* ─── PHONE MOCKUPS ────────────────────────────── */
+    .phones {
+      margin-top: 5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .phone {
+      width: 220px;
+      height: 460px;
+      background: var(--card);
+      border-radius: 36px;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(91,184,245,0.06);
+    }
+    .phone.center { transform: translateY(-24px) scale(1.04); z-index: 2; border-color: rgba(91,184,245,0.3); }
+    .phone.side   { transform: translateY(12px) scale(0.93); opacity: 0.6; }
+
+    .phone-notch {
+      position: absolute;
+      top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 26px;
+      background: var(--black);
+      border-radius: 13px;
+      z-index: 10;
+    }
+    .phone-screen {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      padding-top: 48px;
+    }
+
+    /* Workout Screen */
+    .screen-workout { background: linear-gradient(160deg, #081828 0%, #05111f 100%); padding: 16px; }
+    .screen-workout .timer {
+      text-align: center; font-size: 2.2rem; font-weight: 800;
+      color: var(--accent); letter-spacing: -0.03em; margin: 8px 0 4px;
+    }
+    .screen-workout .label {
+      text-align: center; font-size: 0.62rem; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .ex-row {
+      background: rgba(91,184,245,0.06);
+      border: 1px solid rgba(91,184,245,0.12);
+      border-radius: 10px; padding: 10px 12px; margin-bottom: 6px;
+    }
+    .ex-name { font-size: 0.7rem; font-weight: 600; color: var(--accent-light); margin-bottom: 4px; }
+    .ex-sets { display: flex; gap: 5px; flex-wrap: wrap; }
+    .set-chip {
+      background: rgba(91,184,245,0.1);
+      border: 1px solid rgba(91,184,245,0.2);
+      color: var(--accent); font-size: 0.58rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 5px;
+    }
+    .set-chip.done { background: var(--accent); color: var(--black); border-color: transparent; }
+    .pb-badge {
+      display: inline-block; background: #3a9ee8; color: white;
+      font-size: 0.5rem; font-weight: 700; padding: 1px 5px;
+      border-radius: 4px; margin-left: 4px; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+
+    /* Feed Screen */
+    .screen-feed { background: #06131f; padding: 12px; }
+    .feed-header { font-size: 0.75rem; font-weight: 800; color: var(--accent-light); letter-spacing: -0.02em; margin-bottom: 10px; }
+    .post-card { background: var(--card); border-radius: 12px; overflow: hidden; margin-bottom: 8px; border: 1px solid var(--border); }
+    .post-img { width: 100%; height: 110px; position: relative; display: flex; align-items: flex-end; padding: 8px; }
+    .post-img-1 { background: linear-gradient(135deg, #081e35 0%, #0c2a4a 100%); }
+    .post-img-2 { background: linear-gradient(135deg, #071525 0%, #0d2440 100%); }
+    .stat-overlay {
+      background: rgba(5,17,31,0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 7px; padding: 5px 8px;
+      border: 1px solid rgba(91,184,245,0.2);
+      font-size: 0.5rem;
+    }
+    .stat-overlay .s-title { color: var(--accent); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .stat-overlay .s-val { color: var(--accent-light); font-weight: 600; }
+    .post-meta { padding: 6px 8px; display: flex; align-items: center; gap: 6px; }
+    .avatar { width: 18px; height: 18px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    .post-user { font-size: 0.58rem; font-weight: 600; color: var(--text); }
+    .post-likes { margin-left: auto; font-size: 0.55rem; color: var(--muted); }
+
+    /* Progress Screen */
+    .screen-progress { background: #06131f; padding: 14px; }
+    .prog-title { font-size: 0.72rem; font-weight: 800; color: var(--accent-light); margin-bottom: 4px; }
+    .prog-sub { font-size: 0.58rem; color: var(--muted); margin-bottom: 12px; }
+    .chart-area { height: 90px; position: relative; margin-bottom: 10px; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 5px; height: 100%; }
+    .bar { flex: 1; border-radius: 4px 4px 0 0; background: rgba(91,184,245,0.18); }
+    .bar.hi { background: var(--accent); }
+    .pr-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 10px;
+      background: rgba(91,184,245,0.06);
+      border: 1px solid rgba(91,184,245,0.1);
+      border-radius: 8px; margin-bottom: 5px;
+    }
+    .pr-name { font-size: 0.6rem; font-weight: 600; color: var(--text); }
+    .pr-val { font-size: 0.6rem; font-weight: 700; color: var(--accent); }
+
+    /* ─── SECTION COMMONS ──────────────────────────── */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800;
+      letter-spacing: -0.035em; line-height: 1.1; color: var(--white); margin-bottom: 1.2rem;
+    }
+    .section-desc { font-size: 1.05rem; color: var(--muted); max-width: 520px; line-height: 1.65; }
+
+    /* ─── FEATURES BENTO ───────────────────────────── */
+    .features { background: var(--black); }
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3.5rem;
+    }
+    .bento-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      transition: border-color var(--transition), transform var(--transition), background var(--transition);
+      overflow: hidden;
+      position: relative;
+    }
+    .bento-card:hover { border-color: var(--accent); background: var(--card-hi); transform: translateY(-3px); }
+    .bento-card.wide { grid-column: span 2; }
+    .bento-card.tall { grid-row: span 2; }
+
+    .bento-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .bento-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--accent-light); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .bento-card p  { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    .bento-accent { border-color: rgba(91,184,245,0.3) !important; }
+    .bento-accent::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .mini-chart { display: flex; align-items: flex-end; gap: 5px; height: 60px; margin-top: 1rem; }
+    .mini-bar { flex: 1; border-radius: 4px 4px 0 0; background: rgba(91,184,245,0.15); }
+    .mini-bar.hi { background: var(--accent); }
+
+    .mini-post {
+      background: rgba(91,184,245,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px; height: 50px; margin-top: 0.5rem;
+      display: flex; align-items: center; padding: 0 12px; gap: 10px;
+    }
+    .mini-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .mini-lines { flex: 1; }
+    .mini-line { height: 6px; border-radius: 3px; background: rgba(91,184,245,0.15); margin-bottom: 4px; }
+    .mini-line:last-child { width: 60%; margin-bottom: 0; }
+    .mini-heart { color: var(--accent); font-size: 0.9rem; }
+
+    /* ─── HOW IT WORKS ─────────────────────────────── */
+    .how { background: var(--dark); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .step {
+      padding: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color var(--transition);
+    }
+    .step:hover { border-color: var(--accent); }
+    .step-num {
+      font-size: 3.5rem; font-weight: 900;
+      color: rgba(91,184,245,0.15); line-height: 1;
+      margin-bottom: 1rem; letter-spacing: -0.04em;
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; color: var(--accent-light); margin-bottom: 0.5rem; }
+    .step p  { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── STATS BAR ────────────────────────────────── */
+    .stats-bar {
+      background: var(--navy);
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(91,184,245,0.2);
+      border-bottom: 1px solid rgba(91,184,245,0.2);
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      font-size: 2.2rem; font-weight: 900;
+      color: var(--accent-light); letter-spacing: -0.04em; line-height: 1;
+    }
+    .stat-item .lbl {
+      font-size: 0.8rem; font-weight: 600;
+      color: rgba(213,240,255,0.5); letter-spacing: 0.05em;
+      text-transform: uppercase; margin-top: 0.2rem;
+    }
+
+    /* ─── SPLIT ROWS ───────────────────────────────── */
+    .splits { background: var(--black); }
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      margin-bottom: 7rem;
+    }
+    .split:last-child { margin-bottom: 0; }
+    .split.reverse .split-text  { order: 2; }
+    .split.reverse .split-visual { order: 1; }
+    .split-text .section-title { font-size: clamp(1.6rem, 3.5vw, 2.6rem); }
+
+    .feature-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; color: var(--text); }
+    .check {
+      width: 20px; height: 20px;
+      background: rgba(91,184,245,0.12);
+      border: 1px solid rgba(91,184,245,0.25);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .check::after { content: '✓'; font-size: 0.65rem; color: var(--accent); font-weight: 700; }
+
+    .split-visual {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+
+    /* GPS map visual */
+    .map-visual { width: 100%; height: 100%; background: #060f1a; position: relative; }
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(91,184,245,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,184,245,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .map-route { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 55%; }
+    .map-stats {
+      position: absolute; bottom: 20px; left: 20px;
+      background: rgba(5,17,31,0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 10px; padding: 10px 14px;
+      display: flex; gap: 16px;
+      border: 1px solid rgba(91,184,245,0.2);
+    }
+    .ms-item .ms-val { font-size: 1.1rem; font-weight: 800; color: var(--accent-light); }
+    .ms-item .ms-lbl { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Overlay visual */
+    .overlay-visual {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #081828 0%, #0c2035 100%);
+      position: relative; display: flex; align-items: flex-end; padding: 20px;
+    }
+    .overlay-card {
+      background: rgba(5,17,31,0.82);
+      backdrop-filter: blur(12px);
+      border-radius: 12px; padding: 14px 18px;
+      border: 1px solid rgba(91,184,245,0.2);
+    }
+    .oc-title {
+      font-size: 0.65rem; font-weight: 700; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .oc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .oc-stat .ov  { font-size: 1.1rem; font-weight: 800; color: var(--accent-light); line-height: 1; }
+    .oc-stat .ol  { font-size: 0.55rem; font-weight: 500; color: var(--muted); margin-top: 2px; }
+    .watermark {
+      position: absolute; bottom: 20px; right: 20px;
+      background: var(--accent); color: var(--black);
+      font-size: 0.5rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 5px;
+    }
+
+    /* ─── CTA ──────────────────────────────────────── */
+    .cta-section {
+      padding: 120px 5%;
+      text-align: center;
+      background: var(--dark);
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; bottom: -30%; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(91,184,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-icon {
+      width: 80px; height: 80px;
+      border-radius: 18px; object-fit: cover;
+      margin: 0 auto 2rem;
+      display: block;
+      box-shadow: 0 16px 48px rgba(91,184,245,0.3), 0 0 0 1px rgba(91,184,245,0.2);
+    }
+    .cta-section .section-title { margin: 0 auto 1.2rem; max-width: 700px; }
+    .cta-section .section-desc  { margin: 0 auto 2.5rem; }
+
+    /* ─── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 3rem 5%;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-icon { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; }
+    .footer-logo { font-size: 1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.83rem; color: var(--muted); text-decoration: none; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); width: 100%; text-align: center; margin-top: 0.5rem; }
+
+    /* ─── ANIMATIONS ───────────────────────────────── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.22s; }
+    .delay-3 { animation-delay: 0.34s; }
+    .delay-4 { animation-delay: 0.46s; }
+    .delay-5 { animation-delay: 0.56s; }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .bento { grid-template-columns: 1fr 1fr; }
+      .bento-card.wide { grid-column: span 2; }
+      .bento-card.tall { grid-row: span 1; }
+      .split { grid-template-columns: 1fr; gap: 2.5rem; }
+      .split.reverse .split-text  { order: 1; }
+      .split.reverse .split-visual { order: 2; }
+      .phones .side { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .bento { grid-template-columns: 1fr; }
+      .bento-card.wide { grid-column: span 1; }
+      .stats-bar { gap: 2rem; }
+      .phone { width: 200px; height: 420px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="icon.png" alt="Gym Reel icon" class="nav-icon" />
+      <span class="nav-logo">Gym <span>Reel</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#social">Social</a></li>
+      <li><a href="#download" class="nav-cta">Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="hero-icon-wrap fade-up delay-1">
+      <img src="icon.png" alt="Gym Reel app icon" class="hero-icon" />
+    </div>
+
+    <h1 class="fade-up delay-2">
+      <span class="reel">Gym Reel</span><br>
+      <em class="hero-arrow">→</em>
+      <span class="real">Gym Real</span>
+    </h1>
+
+    <p class="hero-sub fade-up delay-3">
+      The fitness app that's actually real. Log your lifts, track your runs, and share stats that prove the work.
+    </p>
+
+    <div class="hero-actions fade-up delay-4">
+      <a href="#download" class="btn btn-primary">
+        <svg class="app-store-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        Download on App Store
+      </a>
+      <a href="#features" class="btn btn-secondary">
+        See features
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Phone mockups -->
+    <div class="phones fade-up delay-5">
+      <div class="phone side">
+        <div class="phone-notch"></div>
+        <div class="phone-screen screen-progress">
+          <div class="prog-title">Progress</div>
+          <div class="prog-sub">Bench Press · All time</div>
+          <div class="chart-area">
+            <div class="chart-bars">
+              <div class="bar" style="height:35%"></div>
+              <div class="bar" style="height:42%"></div>
+              <div class="bar" style="height:38%"></div>
+              <div class="bar" style="height:55%"></div>
+              <div class="bar" style="height:50%"></div>
+              <div class="bar" style="height:65%"></div>
+              <div class="bar" style="height:60%"></div>
+              <div class="bar" style="height:72%"></div>
+              <div class="bar hi" style="height:85%"></div>
+            </div>
+          </div>
+          <div class="pr-row"><span class="pr-name">Bench Press</span><span class="pr-val">225 lbs ↑</span></div>
+          <div class="pr-row"><span class="pr-name">Squat</span><span class="pr-val">315 lbs ↑</span></div>
+          <div class="pr-row"><span class="pr-name">Deadlift</span><span class="pr-val">405 lbs</span></div>
+        </div>
+      </div>
+
+      <div class="phone center">
+        <div class="phone-notch"></div>
+        <div class="phone-screen screen-workout">
+          <div class="timer">42:17</div>
+          <div class="label">Active Workout</div>
+          <div class="ex-row">
+            <div class="ex-name">Bench Press <span class="pb-badge">PR</span></div>
+            <div class="ex-sets">
+              <span class="set-chip done">135×12</span>
+              <span class="set-chip done">185×8</span>
+              <span class="set-chip done">225×5</span>
+              <span class="set-chip">235×4</span>
+            </div>
+          </div>
+          <div class="ex-row">
+            <div class="ex-name">Incline DB Press</div>
+            <div class="ex-sets">
+              <span class="set-chip done">70×12</span>
+              <span class="set-chip done">80×10</span>
+              <span class="set-chip">85×8</span>
+            </div>
+          </div>
+          <div class="ex-row">
+            <div class="ex-name">Cable Fly</div>
+            <div class="ex-sets">
+              <span class="set-chip">40×15</span>
+              <span class="set-chip">40×15</span>
+              <span class="set-chip">40×15</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone side">
+        <div class="phone-notch"></div>
+        <div class="phone-screen screen-feed">
+          <div class="feed-header">Feed</div>
+          <div class="post-card">
+            <div class="post-img post-img-1">
+              <div class="stat-overlay">
+                <div class="s-title">Push Day</div>
+                <div class="s-val">Vol: 24,800 lbs · 58min</div>
+              </div>
+            </div>
+            <div class="post-meta">
+              <div class="avatar"></div>
+              <span class="post-user">@mikefit</span>
+              <span class="post-likes">♥ 84</span>
+            </div>
+          </div>
+          <div class="post-card">
+            <div class="post-img post-img-2">
+              <div class="stat-overlay">
+                <div class="s-title">Morning Run</div>
+                <div class="s-val">5.2mi · 8:14/mi</div>
+              </div>
+            </div>
+            <div class="post-meta">
+              <div class="avatar" style="background:#3a9ee8"></div>
+              <span class="post-user">@sarahlifts</span>
+              <span class="post-likes">♥ 121</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES BENTO -->
+  <section class="features" id="features">
+    <div class="section-label reveal">Everything you need</div>
+    <h2 class="section-title reveal">Built for people who<br>actually train.</h2>
+    <p class="section-desc reveal">Every feature in Gym Reel exists because real athletes asked for it — not because it looked good in a demo.</p>
+
+    <div class="bento">
+      <div class="bento-card wide bento-accent reveal">
+        <span class="bento-icon">🏋️</span>
+        <h3>Smart Workout Logger</h3>
+        <p>Log sets with weight and reps, auto-filled from your last session. Personal bests detected in real time. Session recovery means a crash never costs you data.</p>
+        <div class="mini-chart">
+          <div class="mini-bar" style="height:40%"></div>
+          <div class="mini-bar" style="height:55%"></div>
+          <div class="mini-bar" style="height:48%"></div>
+          <div class="mini-bar" style="height:65%"></div>
+          <div class="mini-bar" style="height:70%"></div>
+          <div class="mini-bar hi" style="height:88%"></div>
+        </div>
+      </div>
+
+      <div class="bento-card tall reveal">
+        <span class="bento-icon">📊</span>
+        <h3>Progress Graphs</h3>
+        <p>Track weight and volume progression per exercise over time. Charts powered by Swift Charts — fast, beautiful, always up to date.</p>
+        <div style="margin-top:1.2rem; display:flex; flex-direction:column; gap:0.5rem;">
+          <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--muted);">
+            <span>Squat</span><span style="color:var(--accent)">315 lbs ↑</span>
+          </div>
+          <div style="height:5px; background:var(--border); border-radius:3px; overflow:hidden;">
+            <div style="width:78%; height:100%; background:var(--accent); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--muted); margin-top:0.4rem;">
+            <span>Bench</span><span style="color:var(--accent)">225 lbs ↑</span>
+          </div>
+          <div style="height:5px; background:var(--border); border-radius:3px; overflow:hidden;">
+            <div style="width:58%; height:100%; background:var(--accent); border-radius:3px;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--muted); margin-top:0.4rem;">
+            <span>Deadlift</span><span style="color:var(--accent)">405 lbs</span>
+          </div>
+          <div style="height:5px; background:var(--border); border-radius:3px; overflow:hidden;">
+            <div style="width:95%; height:100%; background:var(--accent); border-radius:3px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento-card reveal">
+        <span class="bento-icon">🗺️</span>
+        <h3>GPS Run Tracker</h3>
+        <p>Live map route, real-time pace, elevation, and calories. Audio cues keep you on pace without touching your phone.</p>
+      </div>
+
+      <div class="bento-card reveal">
+        <span class="bento-icon">📱</span>
+        <h3>Social Feed</h3>
+        <p>Real-time Firestore feed with likes, comments, and saves. Workout and run posts with photo overlays. Follow the athletes you actually know.</p>
+        <div class="mini-post" style="margin-top:1rem;">
+          <div class="mini-avatar"></div>
+          <div class="mini-lines">
+            <div class="mini-line"></div>
+            <div class="mini-line"></div>
+          </div>
+          <span class="mini-heart">♥</span>
+        </div>
+      </div>
+
+      <div class="bento-card reveal">
+        <span class="bento-icon">🎨</span>
+        <h3>Stat Overlays</h3>
+        <p>Auto-generated stats card baked into your post photo. Drag to reposition. Share straight to Instagram Stories.</p>
+      </div>
+
+      <div class="bento-card reveal">
+        <span class="bento-icon">📚</span>
+        <h3>Workout Library</h3>
+        <p>Stock programs by push/pull/legs, goal, and skill level. Duplicate, customize, and make them yours.</p>
+      </div>
+
+      <div class="bento-card reveal">
+        <span class="bento-icon">🔒</span>
+        <h3>Offline-First</h3>
+        <p>All workout data written locally first, synced to the cloud when you're back online. Train anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-title reveal">From the gym to<br>your grid in minutes.</h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Log your session</h3>
+        <p>Start from a template or blank. Add exercises, log sets with weight and reps. Auto-fill pulls from your last session so you know exactly where to pick up.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Hit your PR</h3>
+        <p>Personal best detection fires the moment you log a new max — with haptic feedback so you feel it in real time, even mid-set.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Design your post</h3>
+        <p>Pick a photo, drag your stats card to the perfect spot, and preview exactly what your followers will see before it goes live.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <h3>Share the proof</h3>
+        <p>Post to the Gym Reel feed or push straight to Instagram Stories. Your stats are baked into the image — no screenshots, no overlays falling off.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item reveal"><div class="num">500+</div><div class="lbl">Exercises in database</div></div>
+    <div class="stat-item reveal"><div class="num">iOS 17</div><div class="lbl">Minimum target</div></div>
+    <div class="stat-item reveal"><div class="num">100%</div><div class="lbl">SwiftUI</div></div>
+    <div class="stat-item reveal"><div class="num">0</div><div class="lbl">Placeholder screens</div></div>
+  </div>
+
+  <!-- SPLIT ROWS -->
+  <section class="splits" id="social">
+    <div class="split reveal">
+      <div class="split-text">
+        <div class="section-label">GPS tracking</div>
+        <h2 class="section-title">Run data as serious as your training.</h2>
+        <p class="section-desc">Live route mapping, real-time pace, elevation gain, and calorie burn. Audio cues announce your split pace at every mile so your phone stays in your pocket.</p>
+        <ul class="feature-list">
+          <li><span class="check"></span>Real-time distance, pace, and elevation via CoreLocation</li>
+          <li><span class="check"></span>Audio pace announcements via AVFoundation</li>
+          <li><span class="check"></span>Treadmill manual-entry fallback</li>
+          <li><span class="check"></span>Editable title and notes after your run</li>
+          <li><span class="check"></span>Battery-optimised — GPS revoked immediately on stop</li>
+        </ul>
+      </div>
+      <div class="split-visual">
+        <div class="map-visual">
+          <div class="map-grid"></div>
+          <svg class="map-route" viewBox="0 0 200 140" fill="none">
+            <path d="M30 110 C50 80, 80 50, 100 70 C120 90, 150 40, 170 60"
+                  stroke="#5BB8F5" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+            <circle cx="30" cy="110" r="5" fill="#5BB8F5" opacity="0.5"/>
+            <circle cx="170" cy="60" r="7" fill="#5BB8F5"/>
+            <circle cx="170" cy="60" r="14" fill="#5BB8F5" opacity="0.2"/>
+          </svg>
+          <div class="map-stats">
+            <div class="ms-item"><div class="ms-val">5.2</div><div class="ms-lbl">Miles</div></div>
+            <div class="ms-item"><div class="ms-val">8:14</div><div class="ms-lbl">Pace</div></div>
+            <div class="ms-item"><div class="ms-val">342</div><div class="ms-lbl">Cal</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split reverse reveal">
+      <div class="split-text">
+        <div class="section-label">Post creation</div>
+        <h2 class="section-title">Stats that prove the work.</h2>
+        <p class="section-desc">After every session, build a post with an auto-generated stats card. Drag it into position, pick your photo, and share to your feed or directly to Instagram Stories.</p>
+        <ul class="feature-list">
+          <li><span class="check"></span>Stats card auto-populated from your session data</li>
+          <li><span class="check"></span>Drag to reposition — preview matches what gets uploaded</li>
+          <li><span class="check"></span>Image baked with CoreGraphics — no runtime overlays</li>
+          <li><span class="check"></span>Direct Instagram Story sharing with deep link</li>
+          <li><span class="check"></span>Public, friends-only, or private privacy control</li>
+        </ul>
+      </div>
+      <div class="split-visual">
+        <div class="overlay-visual">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" opacity="0.08">
+              <rect x="10" y="10" width="60" height="60" rx="8" stroke="#5BB8F5" stroke-width="1.5"/>
+              <circle cx="28" cy="28" r="8" stroke="#5BB8F5" stroke-width="1.5"/>
+              <path d="M10 52 L26 38 L38 48 L54 32 L70 48 L70 70 L10 70Z" fill="#5BB8F5" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="overlay-card">
+            <div class="oc-title">Push Day — GYM REEL</div>
+            <div class="oc-stats">
+              <div class="oc-stat"><div class="ov">8</div><div class="ol">Exercises</div></div>
+              <div class="oc-stat"><div class="ov">24,800</div><div class="ol">Total Volume</div></div>
+              <div class="oc-stat"><div class="ov">58 min</div><div class="ol">Duration</div></div>
+              <div class="oc-stat"><div class="ov">3 PRs</div><div class="ol">Personal Bests</div></div>
+            </div>
+          </div>
+          <div class="watermark">GYM REEL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="download">
+    <div class="cta-glow"></div>
+    <img src="icon.png" alt="Gym Reel" class="cta-icon reveal" />
+    <div class="section-label reveal">Get started</div>
+    <h2 class="section-title reveal">Train real.<br>Share real.</h2>
+    <p class="section-desc reveal">Download Gym Reel and log your first session today. Your data lives on your device first, always.</p>
+    <div class="hero-actions reveal" style="margin-top:0;">
+      <a href="#" class="btn btn-primary">
+        <svg class="app-store-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        Download on App Store
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <img src="icon.png" alt="" class="footer-icon" />
+      <span class="footer-logo">Gym <span>Reel</span></span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Gym Reel. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>
